@@ -46,3 +46,4 @@ todo.log*
 ._*
 .Spotlight-V100
 .Trashes
+.env
