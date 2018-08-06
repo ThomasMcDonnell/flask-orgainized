@@ -3,7 +3,7 @@
 What Is This?
 -------------
 
-This is a simple Python/Flask application intended to help users better organize there time. It has been integrated with fullcalendar.js (minimal).  
+This is a simple Python/Flask application intended to help users better organize their time. It has been integrated with fullcalendar.js (minimal).  
 
 ## Features
 * User registration 
