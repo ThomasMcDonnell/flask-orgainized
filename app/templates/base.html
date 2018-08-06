@@ -1,0 +1,94 @@
+{% extends "bootstrap/base.html" %}    
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{ url_for('static', filename='fullcalendar/fullcalendar.css') }}">
+<link rel="stylesheet" media="print" href="{{ url_for('static', filename='fullcalendar/fullcalendar.print.css') }}">
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='fullcalendar/lib/moment.min.js') }}"></script>
+<script src="{{ url_for('static', filename='fullcalendar/lib/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='fullcalendar/fullcalendar.min.js') }}"></script>
+<script>
+  $(document).ready(function() {
+    
+    $('#calendar').fullCalendar({
+      themeSystem: 'bootstrap3',
+      nextDayThreshold:'00:00', // not 00:00:00
+      header: {
+        left: 'prev,next, today',
+        center: 'title',
+        right: 'month,basicWeek,basicDay'
+      },
+      selectable: true,
+      SelectHelper: true,
+      editable: true,
+      eventLimit: true, // allow "more" link when too many events
+      displayEventEnd: true,
+      eventSources: [
+
+    // your event source
+    {
+      url: '{{ url_for('data') }}', // use the `url` property
+      type: 'POST',
+      color: 'lightGreen',    // an option!
+      textColor: 'black'  // an option!
+    }
+
+    // any other sources...
+
+  ]
+    });
+  });
+</script>
+{% endblock %}
+
+{% block title %}
+
+{% if title %}
+{{ title }} | Organized
+{% else %}
+Organize Your S*** Like A Pro!
+{% endif %}
+
+{% endblock %}    
+
+{% block navbar %}
+
+<nav class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+     <a class="navbar-brand" href="{{ url_for('index') }}">Organized</a>
+    </div>
+    <div id="navbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="{{ url_for('index') }}">Home</a></li>
+        {% if current_user.is_anonymous %}
+        <li><a href="{{ url_for('login') }}">Login</a></li>
+        {% else %}
+        <li><a href="{{ url_for('calendar', username=current_user.username) }}">Calender</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+        {% endif %}
+      </ul>
+    </div><!--/.navbar -->
+  </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-info" role="alert">{{ message }}</div>
+    {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  {% block app_content %}{% endblock %}
+
+</div>
+{% endblock %}
+
+

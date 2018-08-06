@@ -1,0 +1,27 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Date</th>
+      <th scope="col">discription</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        {{ todo.name }}
+      </td>
+      <td>
+        {{ todo.start }} | {{ todo.end }}
+      </td>
+      <td>
+        {{ todo.actionable }}
+      </td>
+      <td>
+          <form action="{{url_for('delete_todo', todo_id=todo.id)}}" method="POST">
+          <input class="btn btn-danger" type="submit" value="delete">
+        </form>
+      </td>
+    </tr>
+  </tbody>
+</table>
